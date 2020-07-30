@@ -1,4 +1,5 @@
 import pytest
+from .pages.locators import ProductPageLocator
 from .pages.main_page import MainPage
 from .pages.basket_page import BasketPage
 from selenium.webdriver.common.by import By
@@ -9,16 +10,16 @@ def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
     page = BasketPage(browser, link)
     page.open()
     page.go_to_basket()
-    assert page.is_not_element_present(By.CSS_SELECTOR,'.basket-items')
-    assert page.is_element_present(By.CSS_SELECTOR,'#content_inner')
+    assert page.is_not_element_present(*ProductPageLocator.ITEM_ICON)
+    assert page.is_element_present(*ProductPageLocator.ITEM_CONTENT)
 
 def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     link = "http://selenium1py.pythonanywhere.com/"
     page = BasketPage(browser, link)
     page.open()
     page.go_to_basket()
-    assert page.is_not_element_present(By.CSS_SELECTOR,'.basket-items')
-    assert page.is_element_present(By.CSS_SELECTOR,'#content_inner')
+    assert page.is_not_element_present(*ProductPageLocator.ITEM_ICON)
+    assert page.is_element_present(*ProductPageLocator.ITEM_CONTENT)
 
 @pytest.mark.login_guest
 class TestLoginFromMainPage():

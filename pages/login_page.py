@@ -2,6 +2,7 @@ import string
 from random import random
 
 from .base_page import BasePage
+from pages.locators import MainPageLocators, BasePageLocators
 
 
 class LoginPage(BasePage):
@@ -10,13 +11,18 @@ class LoginPage(BasePage):
         self.should_be_login_form()
         self.should_be_register_form()
 
+    def login(self, user, passv):
+        self.browser.find_element(*MainPageLocators.LOGIN_LINK).click()
+        self.browser.find_element(*BasePageLocators.LOGIN_FIELD).send_keys(user)
+        self.browser.find_element(*BasePageLocators.PASS_FIELD).send_keys(passv)
+        self.browser.find_element(*BasePageLocators.LOGIN_SUBMIT).click()
+
     def register_new_user(self, email, password):
-        self.browser.find_element_by_id('login_link').click()
-     #   res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
-        self.browser.find_element_by_name('registration-email').send_keys(email)
-        self.browser.find_element_by_name('registration-password1').send_keys(password)
-        self.browser.find_element_by_name('registration-password2').send_keys(password)
-        self.browser.find_element_by_name('registration_submit').click()
+        self.browser.find_element(*MainPageLocators.LOGIN_LINK).click()
+        self.browser.find_element(*BasePageLocators.REG_EMAIL).send_keys(email)
+        self.browser.find_element(*BasePageLocators.REG_PASS1).send_keys(password)
+        self.browser.find_element(*BasePageLocators.REG_PASS2).send_keys(password)
+        self.browser.find_element(*BasePageLocators.REG_SUBMIT).click()
 
 
     def should_be_login_url(self):
@@ -25,8 +31,8 @@ class LoginPage(BasePage):
 
     def should_be_login_form(self):
         # реализуйте проверку, что есть форма логина
-        assert len(self.browser.find_elements_by_id('login_form')) == 1, 'отсутсвует форма логина'
+        assert len(self.browser.find_elements(*BasePageLocators.LOGIN_FORM)) == 1, 'отсутсвует форма логина'
 
     def should_be_register_form(self):
         # реализуйте проверку, что есть форма регистрации на странице
-        assert len(self.browser.find_elements_by_id('register_form')) == 1, 'отсутсвует форма регистрации'
+        assert len(self.browser.find_elements(*BasePageLocators.REG_FORM)) == 1, 'отсутсвует форма регистрации'

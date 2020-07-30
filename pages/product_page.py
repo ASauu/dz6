@@ -4,7 +4,8 @@ from .locators import ProductPageLocator
 from selenium.common.exceptions import NoAlertPresentException # в начале файла
 
 class ProductPage(BasePage):
-    def go_to_productpage(self):
+
+    def add_product(self):
         batton = self.browser.find_element(*ProductPageLocator.ADD_BOOK)
         batton.click()
 
